@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<canvas id="canvas1" width="600" height="400"></canvas>
+		
+		
+		
+		
+		<script type="text/javascript">
+			var canvas1 = document.getElementById('canvas1');
+			
+			
+			var cxt = canvas1.getContext('2d')
+			
+			
+			
+			
+			function clock(){
+				cxt.clearRect(0,0,600,400);
+				var time  = new Date();
+				var hour = time.getHours()
+				var min = time.getMinutes()
+				var second = time.getSeconds()
+				
+				var img = new Image();
+				img.src='img/2.jpg';
+				
+				cxt.save(); // 保存当前ctx的状态
+				cxt.translate(300,200)
+				 cxt.arc(0,0,150,0,2*Math.PI); //画出圆
+				cxt.clip(); //裁剪上面的圆形
+				cxt.drawImage(img,-150,-150,300,300); // 在刚刚裁剪的园上画图
+				cxt.restore(); // 还原状态
+				
+				
+				if(hour>=12){
+					hour = hour-12;
+				}
+				
+				console.log(`${hour}:${min}:${second}`);
+				
+				cxt.save()
+				
+				cxt.translate(300,200)
+				cxt.rotate(-Math.PI/2);
+				
+				cxt.beginPath()
+				
+				cxt.arc(0,0,150,0,2*Math.PI);
+				
+				cxt.strokeStyle = 'darkgrey';
+//				cxt.lineWidth = 5;
+				cxt.stroke()
+				
+				cxt.closePath()
+				
+				cxt.save();
+				
+				for(var i=0;i<60;i++){
+					cxt.beginPath();
+					cxt.moveTo(130,0);
+					cxt.lineTo(140,0);
+					
+					cxt.strokeStyle = 'salmon';
+					cxt.lineWidth = 2;
+					cxt.stroke();
+					cxt.closePath();
+					cxt.rotate(Math.PI/30)
+				}
+				
+				for(var i=0;i<12;i++){
+					cxt.beginPath();
+					cxt.moveTo(125,0);
+					cxt.lineTo(140,0)
+					cxt.strokeStyle = 'gray';
+					cxt.lineWidth = 4;
+					cxt.stroke();
+					cxt.closePath()
+					cxt.rotate(Math.PI/6)
+					
+				}
+				
+				cxt.restore();
+				cxt.save();
+				cxt.beginPath();
+				
+				cxt.rotate(second*Math.PI/30);
+				
+				cxt.moveTo(-30,0);
+				cxt.lineTo(120,0);
+				cxt.strokeStyle = 'salmon';
+				cxt.lineWidth = 2;
+				cxt.stroke();
+				cxt.closePath();
+				
+				cxt.restore();
+				
+				cxt.save();
+				
+				cxt.beginPath()
+				
+				cxt.rotate(min*Math.PI/30 + second*Math.PI/1800);
+				cxt.moveTo(-20,0);
+				cxt.lineTo(100,0);
+				cxt.strokeStyle = 'slateblue';
+				cxt.stroke();
+				
+				cxt.closePath();
+				
+				cxt.restore();
+				
+				cxt.save();
+				
+				cxt.beginPath();
+				cxt.rotate(hour*Math.PI/6 + min*Math.PI/360);
+				cxt.moveTo(-10,0);
+				cxt.lineTo(80,0);
+				cxt.strokeStyle = 'saddlebrown';
+				
+				cxt.lineWidth = 4;
+				cxt.stroke();
+				
+				cxt.closePath()
+				
+				cxt.restore();
+				
+				cxt.restore()
+				
+				window.requestAnimationFrame(clock);
+				
+			}
+			clock()
+			
+		</script>
+	</body>
+</html>
